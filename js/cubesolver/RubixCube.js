@@ -14,17 +14,6 @@ export const controls = new OrbitControls(camera, canvas); //Enable camera rotat
 controls.enableDamping = false; //rotate as if it has a inertia
 controls.target.set(0, 0, 0); //Center of rotation
 controls.update();
-controls.enableZoom=false;
-/*
-// to disable zoom
-controls.enableZoom = false;
-
-// to disable rotation
-controls.enableRotate = false;
-
-// to disable pan
-controls.enablePan = false;
-*/
 
 
 const SHUFFLE_TIME = 6;
