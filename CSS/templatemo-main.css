@@ -246,6 +246,21 @@ a:hover { color: #FF0; }
   z-index: 10;
  }
 
+ #resetCam{
+  position :absolute;
+  bottom: 10vh;
+  height:6vh;
+  width:7vw;
+  margin-right:auto;
+  margin-left:auto;
+  font-size: 1.2rem;
+  border: 0px;
+  border-radius: 5vw;
+  background-color: #dbe4ff;
+  color: #845ef7;
+  z-index: 10;
+ }
+
 .moveHome {
   position: absolute;
   top:110vh;
@@ -261,27 +276,12 @@ a:hover { color: #FF0; }
   z-index: 10;
 }
 
-
-
-
 #moveButton {
  color:#845ef7;
   z-index: 10;
 }
 
-#resetCam{
-  position :absolute;
-  height:6vh;
-  width:120px;
-  bottom:10vh;
-  left:45vw;
-  font-size: 1.2rem;
-  border: 0px;
-  border-radius: 5vw;
-  background-color: #dbe4ff;
-  color: #845ef7;
-  z-index: 10;
- }
+
 
 .service-content .left-text h4 {
   font-size: 24px;
