@@ -447,10 +447,10 @@ btn_shuffle.addEventListener('pointerup', requestRenderShuffle, false);
 btn_solve.addEventListener('pointerup', solveCubeButtonListener, false);
 btn_resetCam.addEventListener('pointerup', resetCam, false);
 
-window.addEventListener('pointerup', onUp, false);
-window.addEventListener('pointerdown', onDown, false);
+canvas.addEventListener('pointerup', onUp, false);
+canvas.addEventListener('pointerdown', onDown, false);
 //window.addEventListener('pointermove', onMouseMove, false);
-window.addEventListener('resize', requestRender, false);
+canvas.addEventListener('resize', requestRender, false);
 //window.addEventListener('dbclick', solveCubeButtonListener, false);
 //window.addEventListener('touchstart', onTouchStart, false);
 //window.addEventListener('touchmove', onTouchMove, false);

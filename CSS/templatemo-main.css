@@ -209,26 +209,35 @@ a:hover { color: #FF0; }
      height: 100vh;
  }
 
+ #shuffle-and-solve {
+  position :absolute;
+  width:30vw;
+  height: 6vh;
+  bottom:20vh;
+  left:35vw;
+  border: 0px;
+  z-index: 10;
+}
+
  #shuffle{
   position :absolute;
-  height:6vh;
-  width:120px;
-  bottom:20vh;
-  left:25vw;
+  width: 100px;
+  height: 5vh;
+  left:0px;
   font-size: 1.2rem;
   border: 0px;
   border-radius: 5vw;
   background-color: #dbe4ff;
   color: #845ef7;
-  z-index: 10;
- }
+  z-index:absolute
+}
 
  #solve{
   position :absolute;
-  height:5vh;
-  width:120px;
-  bottom:20vh;
-  left:65vw;
+  width: 100px;
+  height: 5vh;
+  right:0px;
+  margin-right:0px;
   font-size: 1.2rem;
   border: 0px;
   border-radius: 5vw;
@@ -237,28 +246,26 @@ a:hover { color: #FF0; }
   z-index: 10;
  }
 
-#moveHome {
+.moveHome {
   position: absolute;
+  top:110vh;
+  right:30vw;
+  width: 40vw;
   height: 6vh;
-  width: 100px;
-  top:115vh;
-  right:45vw;
-  font-size: 1.2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
   border: 0px;
-  border-radius: 5vw;
-  background-color: #dbe4ff;
-  color: #845ef7;
+  background-color: : #fff;
+  color:#845ef7;
   z-index: 10;
 }
 
+
+
+
 #moveButton {
-  position: absolute;
-  top:20px;
-  left:10px;
-  text-align: center;
-  font-size: 1.2rem;
-  border: 0px;
-  color: #845ef7;
+ color:#845ef7;
   z-index: 10;
 }
 
