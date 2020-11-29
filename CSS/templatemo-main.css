@@ -638,6 +638,57 @@ footer em {
         color: #fff;
         margin-bottom: 30px;
     }
+    #shuffle-and-solve {
+        position: absolute;
+        width: 90vw;
+        height: 6vh;
+        bottom: 10vh;
+        left: 5vw;
+        border: 0px;
+        z-index: 10;
+    }
+
+    #shuffle {
+        position: absolute;
+        width: 80px;
+        height: 5vh;
+        left: 0px;
+        font-size: 1.2rem;
+        border: 0px;
+        border-radius: 5vw;
+        background-color: #dbe4ff;
+        color: #845ef7;
+        z-index: absolute
+    }
+
+    #solve {
+        position: absolute;
+        width: 80px;
+        height: 5vh;
+        right: 0px;
+        margin-right: 0px;
+        font-size: 1.2rem;
+        border: 0px;
+        border-radius: 5vw;
+        background-color: #dbe4ff;
+        color: #845ef7;
+        z-index: 10;
+    }
+
+    #resetCam {
+        position: absolute;
+        top: 10vh;
+        height: 6vh;
+        width: 20vw;
+        right: 35vw;
+        font-size: 1.2rem;
+        border: 0px;
+        border-radius: 5vw;
+        background-color: #dbe4ff;
+        color: #845ef7;
+        z-index: 10;
+    }
+
 
 }
 
