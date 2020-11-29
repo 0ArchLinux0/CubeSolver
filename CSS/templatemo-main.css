@@ -874,7 +874,6 @@ body.lb-disable-scrolling {
         left: 10vw;
         border: 0px;
         z-index: 10;
-        text-align: center;
     }
 
     #shuffle {
