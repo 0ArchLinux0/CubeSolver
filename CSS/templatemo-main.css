@@ -868,10 +868,10 @@ body.lb-disable-scrolling {
 
     #shuffle-and-solve {
         position: absolute;
-        width: 80vw;
+        width: 90vw;
         height: 6vh;
-        bottom: 20vh;
-        left: 10vw;
+        bottom: 10vh;
+        left: 5vw;
         border: 0px;
         z-index: 10;
     }
@@ -908,7 +908,7 @@ body.lb-disable-scrolling {
         top: 10vh;
         height: 6vh;
         width: 20vw;
-        right: 30vw;
+        right: 35vw;
         font-size: 1.2rem;
         border: 0px;
         border-radius: 5vw;
