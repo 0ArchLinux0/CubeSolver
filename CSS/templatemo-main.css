@@ -677,7 +677,7 @@ footer em {
 
     #resetCam {
         position: absolute;
-        top: 10vh;
+        top: 5vh;
         height: 6vh;
         width: 20vw;
         right: 35vw;
@@ -956,7 +956,7 @@ body.lb-disable-scrolling {
 
     #resetCam {
         position: absolute;
-        top: 10vh;
+        top: 5vh;
         height: 6vh;
         width: 20vw;
         right: 35vw;
