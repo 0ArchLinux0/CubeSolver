@@ -14,6 +14,17 @@ export const controls = new OrbitControls(camera, canvas); //Enable camera rotat
 controls.enableDamping = false; //rotate as if it has a inertia
 controls.target.set(0, 0, 0); //Center of rotation
 controls.update();
+controls.enableZoom=false;
+/*
+// to disable zoom
+controls.enableZoom = false;
+
+// to disable rotation
+controls.enableRotate = false;
+
+// to disable pan
+controls.enablePan = false;
+*/
 
 
 const SHUFFLE_TIME = 6;
@@ -447,10 +458,10 @@ btn_shuffle.addEventListener('pointerup', requestRenderShuffle, false);
 btn_solve.addEventListener('pointerup', solveCubeButtonListener, false);
 btn_resetCam.addEventListener('pointerup', resetCam, false);
 
-canvas.addEventListener('pointerup', onUp, false);
-canvas.addEventListener('pointerdown', onDown, false);
+window.addEventListener('pointerup', onUp, false);
+window.addEventListener('pointerdown', onDown, false);
 //window.addEventListener('pointermove', onMouseMove, false);
-canvas.addEventListener('resize', requestRender, false);
+window.addEventListener('resize', requestRender, false);
 //window.addEventListener('dbclick', solveCubeButtonListener, false);
 //window.addEventListener('touchstart', onTouchStart, false);
 //window.addEventListener('touchmove', onTouchMove, false);
