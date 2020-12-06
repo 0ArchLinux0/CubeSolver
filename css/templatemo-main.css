@@ -20,6 +20,9 @@ body {
     position: relative;
     /* we need this for the scrollspy */
     font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
 }
 
 a {
