@@ -301,7 +301,11 @@ a:hover {
 }
 
 #description{
-    font-size: 1.5rem;
+    position: absolute;
+    top:103vh;
+    width: 100vw;
+    text-align: center;
+    font-size: 1.2rem;
     color: #9775fa;
     user-select: none;
 }
