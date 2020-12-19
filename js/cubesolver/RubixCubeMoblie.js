@@ -32,7 +32,6 @@ let isDrag = false;
 let isDown = false;
 let isTouchMove = false;
 let buttonDown = false;
-let isMobileCanvas = false;
 
 export const renderer = new THREE.WebGLRenderer({ antialias: true, canvas /*alpha: true*/ });
 renderer.antialias = true; //Render on canvas
@@ -51,52 +50,41 @@ const COLOR_DIRECTIONS = {
 
 const geometry = new THREE.Geometry();
 
+for (let i = 0; i < 10000; i++) {
+    const star = new THREE.Vector3();
+    star.x = THREE.Math.randFloatSpread(2000);
+    star.y = THREE.Math.randFloatSpread(2000);
+    star.z = THREE.Math.randFloatSpread(2000);
+
+    geometry.vertices.push(star)
+}
+
+const material = new THREE.PointsMaterial({
+    color: 0xffffff
+});
+const starField = new THREE.Points(geometry, material);
+scene.add(starField);
+
 var loader = new THREE.TextureLoader();
 
-const logoCubeTexture = loader.load('./image/MinJun.png');
-const whiteCubeTexture = loader.load('./image/CopyrightTop.png');
-const poweredTexture = loader.load('./image/PoweredBy.png');
-//fgscene.background = groundTexture;
-/*groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-groundTexture.repeat.set( 1, 1 );
-groundTexture.anisotropy = 16;
-groundTexture.encoding = THREE.sRGBEncoding;
-
-const groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
-
-let mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 100, 100 ), groundMaterial );
-mesh.position.y = - 250;
-mesh.rotation.x = - Math.PI / 2;
-mesh.receiveShadow = true;
-scene.add( mesh );
-//scene.background = groundTexture;
-
-*/
-
-
-function  setMaterialColors(x, y, z) { //Create Materials with Color on each face
-    return new Promise(function(resolve, reject){
+const setMaterialColors = (x, y, z) => { //Create Materials with Color on each face
 
     const colorMaterials = [];
 
     for (let i = 0; i < 6; i++) {
-        colorMaterials.push(new THREE.MeshStandardMaterial({ color: "#ffffff" }));
-        console.log("set "+colorMaterials.length);
+        colorMaterials.push(new THREE.MeshStandardMaterial({ color: "#282828" }));
     }
-
     x == 1 && (colorMaterials[0] = new THREE.MeshStandardMaterial({ color: COLOR_DIRECTIONS["RIGHT"], roughness: 0.1, metalness: 0.1 }));
     x == -1 && (colorMaterials[1] = new THREE.MeshStandardMaterial({ color: COLOR_DIRECTIONS["LEFT"], roughness: 0.1, metalness: 0.1 }));
     y == 1 && (colorMaterials[2] = new THREE.MeshStandardMaterial({ color: COLOR_DIRECTIONS["UP"], roughness: 0.1, metalness: 0.1 }));
     y == -1 && (colorMaterials[3] = new THREE.MeshStandardMaterial({ color: COLOR_DIRECTIONS["DOWN"], roughness: 0.1, metalness: 0.1 }));
     z == 1 && (colorMaterials[4] = new THREE.MeshStandardMaterial({ color: COLOR_DIRECTIONS["FRONT"], roughness: 0.1, metalness: 0.1 }));
     z == -1 && (colorMaterials[5] = new THREE.MeshStandardMaterial({ color: COLOR_DIRECTIONS["BACK"], roughness: 0.1, metalness: 0.1 }));
-    if (!isMobileCanvas) {
-        (y == 1 && x == 0 && z == 0) && (colorMaterials[2] = new THREE.MeshStandardMaterial({ map: logoCubeTexture, roughness: 0.1, metalness: 0.1 }));
-        (y == 1 && x == 1 && z == 0) && (colorMaterials[2] = new THREE.MeshStandardMaterial({ map: whiteCubeTexture, roughness: 0.1, metalness: 0.1 }));
-        (y == 1 && x == -1 && z == 0) && (colorMaterials[2] = new THREE.MeshStandardMaterial({ map: poweredTexture, roughness: 0.1, metalness: 0.1 }));
-    }
-    resolve(colorMaterials);
-    });
+    /*(y == 1 && x == 0 && z == 0) && (colorMaterials[2] = new THREE.MeshStandardMaterial({ map: logoCubeTexture, roughness: 0.1, metalness: 0.1 }));
+    (y == 1 && x == 1 && z == 0) && (colorMaterials[2] = new THREE.MeshStandardMaterial({ map: whiteCubeTexture, roughness: 0.1, metalness: 0.1 }));
+    (y == 1 && x == -1 && z == 0) && (colorMaterials[2] = new THREE.MeshStandardMaterial({ map: poweredTexture, roughness: 0.1, metalness: 0.1 }));*/
+
+    return colorMaterials;
 }
 
 export const cubeGroup = [
@@ -142,12 +130,16 @@ camera.position.x = 4; //Set camera's default position
 camera.position.y = 4;
 camera.position.z = 4;
 
-
-
-
 let light = new THREE.DirectionalLight(0xffffff, 0.5);
+//light.position.setScalar(10);
+light.position.set(4, 4, 4);
+scene.add(light);
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-const setBacklight = () => { //Set light
+
+
+
+{ //Set light
     const color = 0xFFFFFF;
     const intensity = 0.2;
     // const light_background = new THREE.DirectionalLight(color, intensity); //Direct Light*/
@@ -157,14 +149,7 @@ const setBacklight = () => { //Set light
     const light_background = new THREE.AmbientLight(color, intensity); //Light up the entire space
     scene.add(light_background); //Add
 
-    //light.position.setScalar(10);
-    light.position.set(4, 4, 4);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-
 }
-
-setBacklight();
 
 
 
@@ -179,38 +164,14 @@ var cubeTexture = loader.load( [
 ] );
 
 scene.background= cubeTexture;/*'#ffffff';*/
-function resetCam() {
-    buttonDown = true;
+function resetCam(){
+    buttonDown=true;
     camera.position.x = 4; //Set camera's default position
     camera.position.y = 4;
     camera.position.z = 4;
     render();
-    setTimeout(() => { buttonDown = false; }, 5);
+    setTimeout(()=>{buttonDown=false;},5);
 }
-
-function removeCubeFromScene(){
-    function removeCube(){
-        return new Promise((resolve, reject) => {
-            while(scene.children.length>0){
-            scene.remove(scene.children[0]);
-            }
-            setBacklight();
-            render();
-            resolve(true);
-        });
-    }
-    removeCube().then(()=>{makeInstanceCube();})
-    .then(()=>{setTimeout(()=>{render();},300)}); 
-}
-
-const changeMode = (e) => {
-    isMobileCanvas = !isMobileCanvas;
-    console.log("isMobileCanvas: "+isMobileCanvas);
-    removeCubeFromScene();
-    console.log("mode change");
-}
-
-
 
 let renderRequested = false;
 
@@ -416,9 +377,6 @@ const onUp = (e) => {
 };
 
 
-
-
-
 /*  function onMouseMove(){
       console.log("onmouse MOve!!!");
       if(isDown){
@@ -463,13 +421,10 @@ const onUp = (e) => {
 const btn_solve = document.getElementById("solve");
 const btn_shuffle = document.getElementById("shuffle");
 const btn_resetCam = document.getElementById("resetCam");
-const btn_changeMode = document.getElementById("changeModeButton");
-
 controls.addEventListener('change', requestRender, false); //called first at initializing
 btn_shuffle.addEventListener('pointerup', requestRenderShuffle, false);
 btn_solve.addEventListener('pointerup', solveCubeButtonListener, false);
 btn_resetCam.addEventListener('pointerup', resetCam, false);
-btn_changeMode.addEventListener('pointerup', changeMode, false);
 
 canvas.addEventListener('pointerup', onUp, false);
 canvas.addEventListener('pointerdown', onDown, false);
@@ -479,7 +434,7 @@ canvas.addEventListener('resize', requestRender, false);
 //window.addEventListener('touchstart', onTouchStart, false);
 //window.addEventListener('touchmove', onTouchMove, false);
 //window.addEventListener('touchend', onTouchEnd, false);
-/*function createBoxWithRoundedEdges(width, height, depth, radius0, smoothness) {
+function createBoxWithRoundedEdges(width, height, depth, radius0, smoothness) {
     let shape = new THREE.Shape();
     let eps = 0.0001;
     let radius = radius0 - eps;
@@ -502,7 +457,7 @@ canvas.addEventListener('resize', requestRender, false);
     geometry.center();
 
     return geometry;
-}*/
+}
 /*const cubeMat = new THREE.MeshStandardMaterial( {
     color: '#000000', //Math.random() * 0x777777 + 0x777777,
     envMap: cubeTexture,
@@ -513,9 +468,8 @@ canvas.addEventListener('resize', requestRender, false);
 
 
 
-async function makeInstanceCube() { //Create and initialize 27 cubes
+function makeInstanceCube() { //Create and initialize 27 cubes
     const Cubegeometry = new THREE.BoxGeometry(0.9, 0.9, 0.9);
-    const Boxgeometry = new THREE.BoxBufferGeometry(1, 1, 1, 30, 30, 30);
     for (let i = -1; i < 2; i++) {
         for (let j = -1; j < 2; j++) {
             for (let k = -1; k < 2; k++) {
@@ -524,97 +478,17 @@ async function makeInstanceCube() { //Create and initialize 27 cubes
                   const cubeMaterialColors = setMaterialColors(i, j, k);
                   const cube = new THREE.Mesh( createBoxWithRoundedEdges( 0.9, 0.9, 0.9 , 2 / 9, 16 ), cubeMaterialColors );*/
 
-                
-                //const boxmaterials = new THREE.MeshBasicMaterial({});
-                let cubeMaterialColors=[];
 
-                function init(){
 
-                return new Promise(function(resolve, reject){
-                setMaterialColors(i, j, k)
-                    .then((materialcolor)=>{ cubeMaterialColors=materialcolor;})
-                    .then(()=>{resolve(cubeMaterialColors);});
-                 });
-                }
-                
-                init().then((cubeMaterialColors)=>{
-                if (!isMobileCanvas) {
-                    cubeMaterialColors.forEach((e) => {
-                        e.onBeforeCompile = shader => {
-                            shader.uniforms.boxSize = {
-                                value: new THREE.Vector3(
-                                    Boxgeometry.parameters.width,
-                                    Boxgeometry.parameters.height,
-                                    Boxgeometry.parameters.depth
-                                ).multiplyScalar(0.5)
-                            };
-                            shader.uniforms.radius = settings.radius;
-                            shader.vertexShader = `
-    uniform vec3 boxSize;
-    uniform float radius;
-    ` + shader.vertexShader;
-                            shader.vertexShader = shader.vertexShader.replace(
-                                `#include <begin_vertex>`,
-                                `#include <begin_vertex>
-    
-    float maxRadius = clamp(radius, 0.0, min(boxSize.x, min(boxSize.y, boxSize.z)));
-    vec3 signs = sign(position);
-    
-    vec3 subBox = boxSize - vec3(maxRadius);
-    
-    vec3 absPos = abs(transformed); 
-    // xy
-    vec2 sub = absPos.xy - subBox.xy;
-    if (absPos.x > subBox.x && absPos.y > subBox.y && absPos.z <= subBox.z) {
-      transformed.xy = normalize(sub) * maxRadius + subBox.xy;
-      transformed.xy *= signs.xy;
-    }
-    // xz
-    sub = absPos.xz - subBox.xz;
-    if (absPos.x > subBox.x && absPos.z > subBox.z && absPos.y <= subBox.y) {
-      transformed.xz = normalize(sub) * maxRadius + subBox.xz;
-      transformed.xz *= signs.xz;
-    }
-    // yz
-    sub = absPos.yz - subBox.yz;
-    if (absPos.y > subBox.y && absPos.z > subBox.z && absPos.x <= subBox.x) {
-      transformed.yz = normalize(sub) * maxRadius + subBox.yz;
-      transformed.yz *= signs.yz;
-    }
-    
-    // corner
-    if (all(greaterThan(absPos, subBox))){
-      vec3 sub3 = absPos - subBox;
-      transformed = (normalize(sub3) * maxRadius + subBox) * signs;
-    }
-    
-    // re-compute normals for correct shadows and reflections
-    objectNormal = all(equal(position, transformed)) ? normal : normalize(position - transformed); 
-    transformedNormal = normalMatrix * objectNormal; 
 
-    `
-                            );
-                        };
-                    });
-                }
-                return new Promise((resolve, reject) => {
+                const Boxgeometry = new THREE.BoxBufferGeometry(1, 1, 1, 30, 30, 30);
 
-                    if(!isMobileCanvas){
-                    const cube = new THREE.Mesh(Boxgeometry, cubeMaterialColors);
-                    console.log("success "+i);
-                    resolve(cube);
-                    }
-                else{
-                    const cube = new THREE.Mesh(Cubegeometry, cubeMaterialColors);
-                    console.log(cubeMaterialColors);
-                    console.log("success");
-                    resolve(cube);
-                    }
-                });
-                
-            })
-                .then((cube)=>{
-                cubeGroup[i + 1][j + 1][k+1]=cube; //Can get init position by simple subtraction
+                const boxmaterials = new THREE.MeshBasicMaterial({});
+                const cubeMaterialColors = setMaterialColors(i, j, k);
+                var boxMat = new THREE.MeshStandardMaterial({ color: cubeMaterialColors /*, envMap: cubeTexture*/ });
+
+                const cube = new THREE.Mesh(Boxgeometry, cubeMaterialColors);
+                cubeGroup[i + 1][j + 1].push(cube); //Can get init position by simple subtraction
                 cube.position.x = i;
                 cube.position.y = j;
                 cube.position.z = k;
@@ -649,12 +523,10 @@ async function makeInstanceCube() { //Create and initialize 27 cubes
                 };
                 scene.add(cube);
 
-            })
-            .catch((err)=>{console.log(err);});
-
             }
         }
     }
+
     /*const resetCam=()=>{
         camera.position.x = 4; //Set camera's default position
         camera.position.y = 4;
