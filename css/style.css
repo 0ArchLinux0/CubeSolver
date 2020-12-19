@@ -13,6 +13,7 @@
 
  #info{
  	position: absolute;
+ 	user-select: none;
  	left:1em;
  	top:1em;
  }
@@ -37,6 +38,7 @@
 
  #shuffle{
  	position :fixed;
+ 	user-select: none;
  	height:6%;
  	width:150px;
  	bottom:20%;
@@ -50,6 +52,7 @@
 
  #solve{
  	position :fixed;
+ 	user-select: none;
  	height:6%;
  	width:150px;
  	bottom:20%;
@@ -63,6 +66,7 @@
 
 #resetCam{
  	position :fixed;
+ 	user-select: none;
  	height:6%;
  	width:150px;
  	bottom:10%;

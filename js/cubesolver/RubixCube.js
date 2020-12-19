@@ -32,7 +32,7 @@ let isDrag = false;
 let isDown = false;
 let isTouchMove = false;
 let buttonDown = false;
-let isMobileCanvas = false;
+let isMobileCanvas = isMobile;
 
 export const renderer = new THREE.WebGLRenderer({ antialias: true, canvas /*alpha: true*/ });
 renderer.antialias = true; //Render on canvas
