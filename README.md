@@ -1,2 +1,2 @@
 # CubeSolver
-Help you to Learn Solving Rubix Cube easily
+Help you to Learn to solve Rubix Cube easily
