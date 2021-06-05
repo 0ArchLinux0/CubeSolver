@@ -1,4 +1,4 @@
-# CubeSolver(incomplete)
+# CubeSolver(incomplete) (2020.11~2020.12)
 ### The purpose was to 'Help you to Learn to solve Rubix Cube easily'  
 ### So I composed algorithm with easiest way of solving rubix cube  
 ##### Successfully implemented 3x3x3 rubix cube 3d model on the web and animated the solution process.  
