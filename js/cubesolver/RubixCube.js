@@ -9,9 +9,13 @@ export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 15);
 
 const canvas = document.querySelector('#canvas');
-
+// const canvas = document.getElementById('canvas');
+ 
 export const controls = new OrbitControls(camera, canvas); //Enable camera rotation when drag
 controls.enableDamping = false; //rotate as if it has a inertia
+controls.autoRotate = true; //rotate as if it has a inertia
+controls.enableZoom = false; 
+controls.enablePan = false; 
 controls.target.set(0, 0, 0); //Center of rotation
 controls.update();
 
@@ -204,6 +208,7 @@ function removeCubeFromScene(){
 }
 
 const changeMode = (e) => {
+    if (isRunning || isSolving) return;
     isMobileCanvas = !isMobileCanvas;
     console.log("isMobileCanvas: "+isMobileCanvas);
     removeCubeFromScene();
@@ -276,6 +281,7 @@ let arg2 = (parseInt(Math.random() * 100) % 3 - 1);;
 let clickCount = 0;
 
 function animate(time) {
+    if(controls.autoRotate) controls.autoRotate = false;
     isRunning = true; //Prevent malfunctioning when click multiple times in a row,'isRunning=undefiend' in line 159 causes  when button clicked
     if (i++ == 60) { //R.RotateAxis rotates PI/120 so we need 60times of execution to rotate PI/2 radians.
         i = 0; //Reset i
@@ -349,6 +355,7 @@ export const solveCubeEndNotify = () => {
 let exeCount = 0;
 
 function animate_shuffle(time) { //To shuffle the Rubix Cube, we need to execute animate() for certain SHUFFLE_TIME.
+    if(controls.autoRotate) controls.autoRotate = false;
     isRunning = true;
     if (i++ == 60) { //Reset when rotates PI/2
         i = 1; //To match execute time to 60
@@ -415,10 +422,6 @@ const onUp = (e) => {
     //}, 50);
 };
 
-
-
-
-
 /*  function onMouseMove(){
       console.log("onmouse MOve!!!");
       if(isDown){
@@ -460,6 +463,8 @@ const onUp = (e) => {
         requestRenderShuffle();
     }*/
 //######
+
+
 const btn_solve = document.getElementById("solve");
 const btn_shuffle = document.getElementById("shuffle");
 const btn_resetCam = document.getElementById("resetCam");
@@ -474,7 +479,12 @@ btn_changeMode.addEventListener('pointerup', changeMode, false);
 canvas.addEventListener('pointerup', onUp, false);
 canvas.addEventListener('pointerdown', onDown, false);
 //window.addEventListener('pointermove', onMouseMove, false);
-canvas.addEventListener('resize', requestRender, false);
+// canvas.addEventListener('resize', requestRender, false);
+window.addEventListener('resize', requestRender, false);
+const body = document.getElementsByTagName('body')[0];
+body.addEventListener('scroll', () => {}, false);
+// canvas.addEventListener('onscroll', () => { console.log('fuck')}, false);
+body.addEventListener('click',() => {}, false);
 //window.addEventListener('dbclick', solveCubeButtonListener, false);
 //window.addEventListener('touchstart', onTouchStart, false);
 //window.addEventListener('touchmove', onTouchMove, false);
@@ -510,8 +520,6 @@ canvas.addEventListener('resize', requestRender, false);
     roughness: 1 - i / 9,
   } );*/
 /////////////////////////now
-
-
 
 async function makeInstanceCube() { //Create and initialize 27 cubes
     const Cubegeometry = new THREE.BoxGeometry(0.9, 0.9, 0.9);

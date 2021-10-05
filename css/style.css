@@ -1,105 +1,119 @@
  body {
-     margin: 0;
-     padding: 0;
-     width: 100vw;
-     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
  }
 
- #htmlList {
- 	text-align: center;
- 	font-size:2em;
- 	line-height: 3em;
- }
+canvas {
+    position: absolute;
+    outline:  none;
+    z-index: -1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow:  hidden;
+}
 
- #info{
- 	position: absolute;
- 	user-select: none;
- 	left:1em;
- 	top:1em;
- }
+#changeModeButton {
+    margin-left: 10px;
+    justify-content: flex-start;
+    font-size: 1rem;
+    color: #FFFF00;
+}
 
- #background{
- 	position: fixed;
- 	width: 100%;
- 	height: 100%;
- 	left: 0;
- 	top: 0;
- 	z-index: -1;
- 	border: none;
- 	outline: none;
- 	pointer-events: none;
- }
+#description {
+    margin-left: 10px;
+    font-size:  0.75rem;
+}
 
- #canvas {
-     /*//display: block;*/
-     width: 100%;
-     height: 100%;
- }
+#shuffle-and-solve {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-content: center;
+    z-index:  10;
+    /*background-color: #ffffff;*/
+    width:  100%;
+    height:  100px;
+    bottom:  10%;
+}
 
- #shuffle{
- 	position :fixed;
- 	user-select: none;
- 	height:6%;
- 	width:150px;
- 	bottom:20%;
- 	left:25%;
- 	font-size: 1rem;
- 	border: 0px;
- 	border-radius: 30px;
- 	background-color: #dbe4ff;
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    width: 100%;
+    height:  50%;
+}
 
- }
 
- #solve{
- 	position :fixed;
- 	user-select: none;
- 	height:6%;
- 	width:150px;
- 	bottom:20%;
- 	left:65%;
- 	font-size: 1rem;
- 	border: 0px;
- 	border-radius: 30px;
- 	background-color: #dbe4ff;
+#shuffle {
+    user-select: none;
+    height: 50%;
+    width: 150px;
+    bottom: 20%;
+    left: 25%;
+    font-size: 1rem;
+    border: 0px;
+    border-radius: 30px;
+    background-color: #dbe4ff;
+}
 
- }
+#solve {
+    user-select: none;
+    height: 50%;
+    width: 150px;
+    bottom: 20%;
+    left: 65%;
+    font-size: 1rem;
+    border: 0px;
+    border-radius: 30px;
+    background-color: #dbe4ff;
 
-#resetCam{
- 	position :fixed;
- 	user-select: none;
- 	height:6%;
- 	width:150px;
- 	bottom:10%;
- 	left:45%;
- 	font-size: 1rem;
- 	border: 0px;
- 	border-radius: 30px;
- 	background-color: #dbe4ff;
- }
+}
 
- @media only screen and (max-width: 992 px) {
- 	 #shuffle{
- 	position :fixed;
- 	height:6%;
- 	width:120px;
- 	bottom:20%;
- 	left:15%;
- 	font-size: 1rem;
- 	border: 0px;
- 	border-radius: 30px;
- 	background-color: #dbe4ff;
+#resetCam {
+    user-select: none;
+    height: 50%;
+    width: 150px;
+    bottom: 10%;
+    left: 45%;
+    font-size: 1rem;
+    border: 0px;
+    border-radius: 30px;
+    background-color: #dbe4ff;
+}
 
- }
+@media only screen and (max-width: 992 px) {
+    #shuffle {
+        position: fixed;
+        height: 6%;
+        width: 120px;
+        bottom: 20%;
+        left: 15%;
+        font-size: 1rem;
+        border: 0px;
+        border-radius: 30px;
+        background-color: #dbe4ff;
 
- #solve{
- 	position :fixed;
- 	height:6%;
- 	width:120px;
- 	bottom:20%;
- 	right:15%;
- 	font-size: 1rem;
- 	border: 0px;
- 	border-radius: 30px;
- 	background-color: #dbe4ff;
+    }
 
- }
+    #solve {
+        position: fixed;
+        height: 6%;
+        width: 120px;
+        bottom: 20%;
+        right: 15%;
+        font-size: 1rem;
+        border: 0px;
+        border-radius: 30px;
+        background-color: #dbe4ff;
+
+    }
