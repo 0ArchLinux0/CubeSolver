@@ -6,5 +6,3 @@
 ##### *__but__* it hasn't been long since I started studying programming, so I put it off to do it later.
 
 
-###### I'm so lazy...
-
