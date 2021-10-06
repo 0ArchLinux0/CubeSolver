@@ -9,7 +9,7 @@ export const rotateCube = (Axis, Clockwise, callback) => {
     R.RotateAll(Axis, Clockwise);
     if (i++ == 59) { //rotateCube is called only 60times therefore set the number to 59
         i = 0;
-        console.log("callback");
+        // console.log("callback");
         callback();
        // console.log("Rotation over");
         return;
