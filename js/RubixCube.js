@@ -320,15 +320,6 @@ function requestRender() {
     }
 }
 
-function requestRender_animate() {
-    //Check if Render is running
-
-    if (!isRunning) {
-        isRunning = true;
-        requestAnimationFrame(animate); //Callback render
-    }
-}
-
 let isRunning = false;
 let ran_num = parseInt(Math.random() * 3 - 0.1);
 
@@ -347,16 +338,17 @@ let arg2 = (parseInt(Math.random() * 100) % 3) - 1;
 let clickCount = 0;
 
 function animate(time) {
+    // console.log('animate');
     if (controls.autoRotate) {
         controls.autoRotate = false;
         resetCam();
         return;
     }
     isRunning = true; //Prevent malfunctioning when click multiple times in a row,'isRunning=undefiend' in line 159 causes  when button clicked
-    if (i++ == 60) {
+    if (i++ == 30) {
         //R.RotateAxis rotates PI/120 so we need 60times of execution to rotate PI/2 radians.
         i = 0; //Reset i
-        ran_num = parseInt(Math.random() * 3 - 0.1);
+        ran_num = parseInt(Math.random() * 3);
         isRunning = undefined; //When rotating PI/2 is done,notify it is not runnig anymore
         arg1 = String.fromCharCode(88 + ran_num); //Random char among X,Y,Z
         arg2 = (parseInt(Math.random() * 100) % 3) - 1; //Random int from -1 to 1
@@ -365,6 +357,7 @@ function animate(time) {
     }
     //console.log("called animate");
     R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2); //Rotate in Axis arg1, at row index arg2
+    R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2);
    
     if (
         (!isMobile && prevWidth !== canvas.width) ||
@@ -393,9 +386,6 @@ function animate(time) {
 //camera.translateY(-1); //Move camea's relative position(sphere Y is limeted to -PI/2 to PI/2)
 //camera.position.x+=1; //Move camera's absolute position
 
-let countExecute = 0;
-let needExecute = 1; //Number of times the fucntion has to be executed
-let needExecuteInitialized = false;
 let isSolving = false;
 
 const solveCubeButtonListener = () => {
@@ -422,7 +412,7 @@ function animate_shuffle(time) {
     //To shuffle the Rubix Cube, we need to execute animate() for certain SHUFFLE_TIME.
     if (controls.autoRotate) controls.autoRotate = false;
     isRunning = true;
-    if (i++ == 60) {
+    if (i++ == 30) {
         //Reset when rotates PI/2
         i = 1; //To match execute time to 60
         ran_num = parseInt(Math.random() * 3 - 0.1);
@@ -441,7 +431,7 @@ function animate_shuffle(time) {
     }
     buttonDown = true;
     R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2); //Rotate
-
+    R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2);
     if (
         (!isMobile && prevWidth !== canvas.width) ||
         prevHeight !== canvas.heigth
@@ -477,6 +467,7 @@ function onDown(e) {
 
 const onUp = (e) => {
     // setTimeout(()=>{
+    if (!isDown ||buttonDown) return;
     pos_up[0] = e.pageX;
     pos_up[1] = e.pageY;
     const v =
@@ -484,17 +475,8 @@ const onUp = (e) => {
     // console.log(v);
     // console.log("bdown" + buttonDown);
     //If more than 1.2sec passes or mouse is dragged or something is running return.
-    if (
-        !isDown ||
-        buttonDown ||
-        Math.abs(pos_up[0] - pos_down[0]) + Math.abs(pos_up[1] - pos_down[1]) >
-            20
-    ) {
-        //    console.log("return");
-        return;
-    }
-    // if (isMobile) requestRender_animate();
-    else animate();
+    if (Math.abs(pos_up[0] - pos_down[0]) + Math.abs(pos_up[1] - pos_down[1]) > 20) return;
+    else if(!isRunning) animate();
     isDown = false;
     //}, 50);
 };

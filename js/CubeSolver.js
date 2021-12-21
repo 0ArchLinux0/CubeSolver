@@ -22,7 +22,7 @@ let needExecuteInitialized = false;
 
 export const solveCubeStart = () => { //Solve Cube when solve button clicked
     //console.log("in first"+needExecuteInitialized+"count is "+count+"count Execute is: "+countExecute+" needExecute is "+needExecute);
-    if (i++ == 60) { //Reset when rotates PI/2
+    if (i++ == 30) { //Reset when rotates PI/2
         i = 1;
         countExecute++;
     }
@@ -81,7 +81,7 @@ export const step1_1 = () => { //Make white face look up
             Execute = 2;
             break;
     }
-    if (count++ == 59) {
+    if (count++ == 29) {
         count = 0;
         Initialized = false;
     }
@@ -112,7 +112,7 @@ const step1_2 = () => {
         Initialized = false;
         return 0;
     }
-    if (count++ == 59) {
+    if (count++ == 29) {
         count = 0;
         Initialized = false;
     }
@@ -172,7 +172,7 @@ const step2_1_execute = () => {
     }
     controls.update();
     renderer.render(scene, camera);
-    if (countRender++ == 59) {
+    if (countRender++ == 29) {
         countRender = 0;
         //console.log("case: " + step2_1Count + "Rotation over ");
         if (step2_1Count++ == 3) {
@@ -217,7 +217,7 @@ const step2_2_execute = () => {
     }
     controls.update();
     renderer.render(scene, camera);
-    if (countRender++ == 59) {
+    if (countRender++ == 29) {
         countRender = 0;
         if (step2_1Count == 3 || step2_1Count == 4) {
             step2_1Count++;
@@ -257,7 +257,7 @@ const step3_execute = () => { //Complete Second row of Cube
     }
     controls.update();
     renderer.render(scene, camera);
-    if (countRender++ == 59) {
+    if (countRender++ == 29) {
         countRender = 0;
 
         if (step3Count++ == 3) {

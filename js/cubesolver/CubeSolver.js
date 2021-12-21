@@ -81,7 +81,7 @@ export const step1_1 = () => { //Make white face look up
             Execute = 2;
             break;
     }
-    if (count++ == 59) {
+    if (count++ == 29) {
         count = 0;
         Initialized = false;
     }
@@ -172,7 +172,7 @@ const step2_1_execute = () => {
     }
     controls.update();
     renderer.render(scene, camera);
-    if (countRender++ == 59) {
+    if (countRender++ == 29) {
         countRender = 0;
         //console.log("case: " + step2_1Count + "Rotation over ");
         if (step2_1Count++ == 3) {
@@ -257,7 +257,7 @@ const step3_execute = () => { //Complete Second row of Cube
     }
     controls.update();
     renderer.render(scene, camera);
-    if (countRender++ == 59) {
+    if (countRender++ == 29) {
         countRender = 0;
 
         if (step3Count++ == 3) {
