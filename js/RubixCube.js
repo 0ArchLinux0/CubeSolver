@@ -493,7 +493,7 @@ const onUp = (e) => {
         //    console.log("return");
         return;
     }
-    if (isMobile) requestRender_animate();
+    // if (isMobile) requestRender_animate();
     else animate();
     isDown = false;
     //}, 50);
@@ -565,7 +565,7 @@ window.addEventListener('resize', requestRender, false);
 // //window.addEventListener('pointermove', onMouseMove, false);
 // // canvas.addEventListener('resize', requestRender, false);
 // window.addEventListener("resize", requestRender, false);
-// const body = document.getElementsByTagName("body")[0];
+const body = document.getElementsByTagName("body")[0];
 // body.addEventListener("scroll", () => {}, false);
 // // canvas.addEventListener('onscroll', () => { console.log('')}, false);
 body.addEventListener("click", () => {}, false);
