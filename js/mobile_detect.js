@@ -1,9 +1,9 @@
 export var isMobile = false;
 var filter = "hp-ux|linux i686|linux armv7l|mac68k|macppc|macintel|sunos|win16|win32|wince";
-console.log(navigator.platform);
-if (navigator.platform) {
+console.log(navigator.userAgentData.platform);
+if (navigator.userAgentData.platform) {
 
-    isMobile = filter.indexOf(navigator.platform.toLowerCase()) < 0;
+    isMobile = filter.indexOf(navigator.userAgentData.platform.toLowerCase()) < 0;
 }
 
 /*if (isMobile) {         //prevent rotate
