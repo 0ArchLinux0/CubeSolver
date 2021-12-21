@@ -22,7 +22,7 @@ let needExecuteInitialized = false;
 
 export const solveCubeStart = () => { //Solve Cube when solve button clicked
     //console.log("in first"+needExecuteInitialized+"count is "+count+"count Execute is: "+countExecute+" needExecute is "+needExecute);
-    if (i++ == 30) { //Reset when rotates PI/2
+    if (i++ == 60) { //Reset when rotates PI/2
         i = 1;
         countExecute++;
     }

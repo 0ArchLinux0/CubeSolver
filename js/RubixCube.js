@@ -107,7 +107,7 @@ function setMaterialColors(x, y, z) {
 
         for (let i = 0; i < 6; i++) {
             colorMaterials.push(
-                new THREE.MeshStandardMaterial({ color: "#ffffff" })
+                new THREE.MeshStandardMaterial({ color: "#000" })
             );
             // console.log("set "+colorMaterials.length);
         }
