@@ -378,14 +378,14 @@ const step5 = () => { //Complete the Face
         checkInitialized = false;
         step6();
         return;
-    } else if (!visited1 && Z_FacesBinarySum == 15 || (Z_FacesBinarySum == 12 && X_FacesBinarySum == 3)) {;
+    } else if (!visited1 && (Z_FacesBinarySum == 15 || (Z_FacesBinarySum == 12 && X_FacesBinarySum == 3))) {;
         checkInitialized = false;
         i = 0;
         visited1 = true;
         step5_CompleteFace_1();
         return;
-    } else if (!visited2 && (Z_FacesBinarySum == 8 && X_FacesBinarySum == 2) || (Z_FacesBinarySum == 8 && X_FacesBinarySum == 5) ||
-        (Z_FacesBinarySum == 5 && X_FacesBinarySum == 8) || (Z_FacesBinarySum == 6 && X_FacesBinarySum == 0)) {
+    } else if (!visited2 && ((Z_FacesBinarySum == 8 && X_FacesBinarySum == 2) || (Z_FacesBinarySum == 8 && X_FacesBinarySum == 5) ||
+        (Z_FacesBinarySum == 5 && X_FacesBinarySum == 8) || (Z_FacesBinarySum == 6 && X_FacesBinarySum == 0))) {
         checkInitialized = false;
         i = 0;
         visited2 = true;

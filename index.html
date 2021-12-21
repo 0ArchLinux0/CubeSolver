@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>Solve Cube!</title>
+        <meta name="description" content="Rubix Cube Simulator" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
 
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="CSS/style.css">
-    <title>3D RUBIX PROJECT</title>
-</head>
-
-<body>
-        <canvas id="canvas">
-        </canvas> 
-        <script src='https://unpkg.com/mathjs@8.0.1/lib/browser/math.js'></script>
-        <script type="module" src="./js/RubixCube.js"></script>
-        <button id="shuffle">Shuffle!</button>
-        <button id="solve">Solve!</button>
-        <button id="resetCam">Reset Camera</button>
-</body>
-
-</html>  
+    <body>
+        <canvas class="canvas" id="canvas"></canvas>
+        <div class="row">
+            <div id="changePerformanceButton">
+                Click to change mode
+            </div>
+            <div style="font-size:0.75rem; margin-right: 5px;">
+                This animation shows solution using Beginners's method
+            </div>
+        </div>
+        
+        <div id="description">
+            Current Performance: <span id="currentPerformance"> default </span>
+        </div>
+        <div id="description">Choose between performance "HIGH" and "LOW"</div>
+        <div id="shuffle-and-solve">
+            <div class="row">
+                <button id="shuffle">Shuffle!</button>
+                <button id="solve">Solve!</button>
+            </div>
+            <div class="row">
+                <button id="resetCam">Reset Camera</button>
+            </div>
+        </div>
+        <script src="https://unpkg.com/mathjs@8.0.1/lib/browser/math.js"></script>
+        <script type="module" src="./js/cubesolver/RubixCube.js"></script>
+    </body>
+</html>
