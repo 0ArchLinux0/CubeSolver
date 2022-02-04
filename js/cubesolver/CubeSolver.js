@@ -21,35 +21,38 @@ let needExecuteInitialized = false;
 //let isSolving = false;
 
 export const solveCubeStart = () => { //Solve Cube when solve button clicked
+    console.log('fuck start');
+    animator = new Animator();
+    animator.oneRotate("X", 1, 1);
     //console.log("in first"+needExecuteInitialized+"count is "+count+"count Execute is: "+countExecute+" needExecute is "+needExecute);
-    if (i++ == 60) { //Reset when rotates PI/2
-        i = 1;
-        countExecute++;
-    }
-    if (countExecute == needExecute) {
-        i = 0;
-        countExecute = 0;
-        needExecute = 1;
-        needExecuteInitialized = false;
-        //console.log("solveCubeButton init");
-        Render_step1_2();
-        return false;
-    }
+    // if (i++ == 60) { //Reset when rotates PI/2
+    //     i = 1;
+    //     countExecute++;
+    // }
+    // if (countExecute == needExecute) {
+    //     i = 0;
+    //     countExecute = 0;
+    //     needExecute = 1;
+    //     needExecuteInitialized = false;
+    //     //console.log("solveCubeButton init");
+    //     Render_step1_2();
+    //     return false;
+    // }
 
-    if (!needExecuteInitialized) {
-        needExecuteInitialized = true;
-        needExecute = step1_1();
-        // console.log("need init "+needExecute);
-    } else {
-        step1_1();
-    }
+    // if (!needExecuteInitialized) {
+    //     needExecuteInitialized = true;
+    //     needExecute = step1_1();
+    //     // console.log("need init "+needExecute);
+    // } else {
+    //     step1_1();
+    // }
 
     //camera.translateY(-1); //Move camea's relative position(sphere Y is limeted to -PI/2 to PI/2)
     //camera.position.x+=1; //Move camera's absolute position
 
-    controls.update();
-    renderer.render(scene, camera);
-    requestAnimationFrame(solveCubeStart);
+    // controls.update();
+    // renderer.render(scene, camera);
+    // requestAnimationFrame(solveCubeStart);
 
 }
 
@@ -501,7 +504,7 @@ const step6_helper = () => { //Makes all the edges be in the right place.
                     step6_LeftTop_To_RightBottom();
                     return;
                 }
-                else{
+                else {
                     solveCubeEndNotify(); 
                     step6_RightBottom_To_LeftTop();
                     return;
@@ -3294,63 +3297,8 @@ function step5_CompleteFace_3() { //Set edges of yellow face in right position
 /////////////////////////////////////////////Final step 6////////////////////////////////////
 
 function step6_LeftTop_To_RightBottom_just() { //Set edges of yellow face in right position
-    if (i++ == 60) {
-        i = 1;
-        step2_1_count++;
-    }
-    if (step2_1_count == 14) {
-        i = 0;
-        step2_1_count = 0;
-        step6();
-        return;
-    }
-    switch (step2_1_count) {
-        case 0:
-            R.RotateAxis("Z", -1, -1);
-            break;
-        case 1:
-            R.RotateAxis("X", 1, -1);
-            break;
-        case 2:
-            R.RotateAxis("Z", -1, -1);
-            break;
-        case 3:
-            R.RotateAxis("X", 1, 1);
-            break;
-        case 4:
-            R.RotateAxis("X", 1, 1);
-            break;
-        case 5:
-            R.RotateAxis("Z", 1, -1);
-            break;
-        case 6:
-            R.RotateAxis("X", -1, -1);
-            break;
-        case 7:
-            R.RotateAxis("Z", -1, -1);
-            break;
-        case 8:
-            R.RotateAxis("X", 1, 1);
-            break;
-        case 9:
-            R.RotateAxis("X", 1, 1);
-            break;
-        case 10:
-            R.RotateAxis("Z", -1, -1);
-            break;
-        case 11:
-            R.RotateAxis("Z", -1, -1);
-            break;
-        case 12:
-            R.RotateAll("X",1,1);
-            break;
-        case 13:
-            R.RotateAll("X",1,1);
-            break;
-    }
-    controls.update(); //Update
-    renderer.render(scene, camera); //render to display on screen
-    requestAnimationFrame(step6_LeftTop_To_RightBottom_just);
+    step6_RightBottom_To_LeftTop(true);
+    
 }
 
 function step6_LeftTop_To_RightBottom() { //Set edges of yellow face in right position
@@ -3421,7 +3369,11 @@ function step6_RightBottom_To_LeftTop() { //Set edges of yellow face in right po
     if (step2_1_count == 14) {
         i = 0;
         step2_1_count = 0;
-        step7();
+        if(haveToRecheck) {
+            step6_helper();
+        } else {
+            step7();
+        }
         return;
     }
         switch (step2_1_count) {
@@ -3471,4 +3423,95 @@ function step6_RightBottom_To_LeftTop() { //Set edges of yellow face in right po
     controls.update(); //Update
     renderer.render(scene, camera); //render to display on screen
     requestAnimationFrame(step6_RightBottom_To_LeftTop);
+}
+
+function step6_clock() { //Set edges of yellow face in right position
+    return new Promise((resolve, reject) => {
+
+    });
+    if (i++ == 60) {
+        i = 1;
+        step2_1_count++;
+    }
+    if (step2_1_count == 14) {
+        i = 0;
+        step2_1_count = 0;
+        if(haveToRecheck) {
+            step6_helper();
+        } else {
+            step7();
+        }
+        return;
+    }
+        switch (step2_1_count) {
+        case 0:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 1:
+            R.RotateAxis("Z", 1, 1);
+            break;
+        case 2:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 3:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 4:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 5:
+            R.RotateAxis("X", 1, 1);
+            break;
+        case 6:
+            R.RotateAxis("Z", -1, 1);
+            break;
+        case 7:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 8:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 9:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 10:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 11:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 12:
+            R.RotateAll("X",1,1);
+            break;
+        case 13:
+            R.RotateAll("X",1,1);
+            break;
+    }
+    controls.update(); //Update
+    renderer.render(scene, camera); //render to display on screen
+    requestAnimationFrame(step6_RightBottom_To_LeftTop);
+}
+
+class Animator {
+    constructor() {
+        this.frameIdx = 0;
+    }
+
+    // rotateByCommand(command) {
+    //     for(let i = 0; i < command.length; i++) {
+    //         command[i]
+    //     }
+    // }
+
+    oneRotate(axis, clockwise, value) {
+        R.RotateAxis("X", -1, 1);
+
+        if (++this.frameIdx == 60) {
+            this.frameIdx = 0;
+            return Promise.resolve();
+        }
+        controls.update(); //Update
+        renderer.render(scene, camera); //render to display on screen
+        return new Promise(requestAnimationFrame(oneRotate));
+    }
 }
