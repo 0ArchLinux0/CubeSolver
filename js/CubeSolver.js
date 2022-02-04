@@ -3409,7 +3409,7 @@ function step6_RightBottom_To_LeftTop(again) { //Set edges of yellow face in rig
         i = 0;
         step2_1_count = 0;
         if(again) {
-            step6_helper();
+            step6();
         }
         else {
             step7();
