@@ -495,9 +495,27 @@ const step6 = () => { //Count the number of cube which is placed in it's init po
         step6_helper();
         return;
     } else if (count == 4) {
+        step6_to7();
+        return;
+    }
+}
+
+const step6_to7 = () => {
+    if (i++ == 60) {
+        i = 1;
+        step2_1_count++;
+    }
+    if (step2_1_count == 2) {
+        i = 0;
+        step2_1_count = 0;
         step7();
         return;
     }
+
+    R.RotateAll("X",1,1);
+    controls.update(); //Update
+    renderer.render(scene, camera); //render to display on screen
+    requestAnimationFrame(step6_to7);
 }
 
 const step6_helper = () => { //Makes all the edges be in the right place.
