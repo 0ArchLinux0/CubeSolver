@@ -1,4 +1,5 @@
 import * as Control from './CameraControl.js'
+import { controls, camera, scene, renderer, cubeGroup, cubeRotateState, solveCubeEndNotify } from './RubixCube.js';
 import * as R from './Rotation.js';
 
 
@@ -17,8 +18,8 @@ let countExecute = 0;
 let needExecute = 1; //Number of times the fucntion has to be executed
 let Execute = 0;
 let needExecuteInitialized = false;
-let frameIdx = 0;
-//let isSolving = false;
+// let frameIdx = 0;
+// let isSolving = false;
 
 // class Animator {
 //     constructor() {
