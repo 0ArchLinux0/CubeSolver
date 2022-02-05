@@ -75,8 +75,11 @@ let Initialized = false;
     requestAnimationFrame(RotateAxisRender); // No parameter come in
 }*/
 
-export const RotateAxis = (axisName, clockwise, value) => {
+export const RotateAxis = (axisName, clockwise, value, fps) => {
     count++;
+    if(fps == 0 || fps == null) fps = 60;
+    // console.log('fps: ' + fps);
+    const dtheta = clockwise * Math.PI / (2 * fps);
     cubeGroup.forEach((cubeinPlane) => {
         cubeinPlane.forEach((cubeinLine) => {
             cubeinLine.forEach((cubeElement) => {
@@ -92,24 +95,24 @@ export const RotateAxis = (axisName, clockwise, value) => {
                                     +math.inv(cubeElement.rotAxisZMatrix).subset(math.index(0, 1)) * 2 +
                                     math.inv(cubeElement.rotAxisZMatrix).subset(math.index(0, 2)) * 4;*/
                             }
-
-                            cubeElement.angle.x += clockwise * Math.PI / 120; //Store angle of each cube element's rotation
+                            
+                            cubeElement.angle.x += dtheta //Store angle of each cube element's rotation
                             cubeElement.cube.position.z = Math.cos(cubeElement.angle.x) * cubeElement.storePosition.z - Math.sin(cubeElement.angle.x) * cubeElement.storePosition.y;
                             cubeElement.cube.position.y = Math.sin(cubeElement.angle.x) * cubeElement.storePosition.z + Math.cos(clockwise * cubeElement.angle.x) * cubeElement.storePosition.y;
                             //By this you can get better accurracy than---> 
                             //--->cubeElement.cube.position.z = Math.cos(cubeElement.angle.x) * cubeElement.cube.position.z - Math.sin(cubeElement.angle.x) * cubeElement.cube.position.y;
 
                             pivot.attach(cubeElement.cube); //If we just use cube.rotation.x if takes us to Euler's gimbal lock problem(has too use matrix **Line  41) 
-                            pivot.rotation.x -= clockwise * Math.PI / 120; //To avoid that we make each cube element to descendant of new Object3D and rotate Object3D(Which is pivot here)
+                            pivot.rotation.x -= dtheta; //To avoid that we make each cube element to descendant of new Object3D and rotate Object3D(Which is pivot here)
                             pivot.updateMatrixWorld(); //Update Object3D
                             scene.attach(cubeElement.cube); //Assential to display in screen
 
-                            if (count == 60) { //When Rotate PI/2
+                            if (count == fps) { //When Rotate PI/2
                                 cubeElement.stored = false;
                                 //cubeElement.cube.rotation.y -= Math.PI / 120;
                                 cubeElement.cube.position.y = Math.round(cubeElement.cube.position.y);
                                 cubeElement.cube.position.z = Math.round(cubeElement.cube.position.z);
-                                transMatrix=clockwise==1?rotXmatrix:rev_rotXmatrix;
+                                transMatrix = clockwise == 1 ? rotXmatrix : rev_rotXmatrix;
                                 cubeElement.axisDirection=math.multiply(cubeElement.axisDirection,transMatrix);
                                 /*cubeElement.rotAxisZMatrix = math.multiply(rotXmatrix, cubeElement.rotAxisZMatrix);
                                 cubeElement.rotAxisYMatrix = math.multiply(rotXmatrix, cubeElement.rotAxisYMatrix);*/
@@ -139,11 +142,11 @@ export const RotateAxis = (axisName, clockwise, value) => {
 
                             }
 
-                            cubeElement.angle.y += clockwise * Math.PI / 120;
+                            cubeElement.angle.y += dtheta;
                             cubeElement.cube.position.x = Math.cos(cubeElement.angle.y) * cubeElement.storePosition.x - Math.sin(cubeElement.angle.y) * cubeElement.storePosition.z;
                             cubeElement.cube.position.z = Math.sin(cubeElement.angle.y) * cubeElement.storePosition.x + Math.cos(cubeElement.angle.y) * cubeElement.storePosition.z;
                             pivot.attach(cubeElement.cube);
-                            pivot.rotation.y -= clockwise * Math.PI / 120;
+                            pivot.rotation.y -= dtheta;
                             pivot.updateMatrixWorld();
                             scene.attach(cubeElement.cube);
 
@@ -174,7 +177,7 @@ export const RotateAxis = (axisName, clockwise, value) => {
                                     break;
                             }*/
 
-                            if (count == 60) {
+                            if (count == fps) {
                                 cubeElement.stored = false;
                                 cubeElement.cube.position.z = Math.round(cubeElement.cube.position.z);
                                 cubeElement.cube.position.x = Math.round(cubeElement.cube.position.x);
@@ -193,8 +196,6 @@ export const RotateAxis = (axisName, clockwise, value) => {
                                     if(value==0) cubeRotateState[0]=math.multiply(cubeRotateState[0],transMatrix);
                                     /*  console.log("reset count X");*/
                                 }
-
-
                             }
                         }
                         break;
@@ -210,12 +211,12 @@ export const RotateAxis = (axisName, clockwise, value) => {
                                      math.inv(cubeElement.rotAxisZMatrix).subset(math.index(2, 2)) * 4;*/
                             }
 
-                            cubeElement.angle.z += clockwise * Math.PI / 120;
+                            cubeElement.angle.z += dtheta;
                             cubeElement.cube.position.y = Math.cos(cubeElement.angle.z) * cubeElement.storePosition.y - Math.sin(cubeElement.angle.z) * cubeElement.storePosition.x;
                             cubeElement.cube.position.x = Math.sin(cubeElement.angle.z) * cubeElement.storePosition.y + Math.cos(cubeElement.angle.z) * cubeElement.storePosition.x;
 
                             pivot.attach(cubeElement.cube);
-                            pivot.rotation.z -= clockwise * Math.PI / 120;
+                            pivot.rotation.z -= dtheta;
                             pivot.updateMatrixWorld();
                             scene.attach(cubeElement.cube);
 
@@ -223,7 +224,7 @@ export const RotateAxis = (axisName, clockwise, value) => {
                               some_quaternion.setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI / 120);
                               cubeElement.cube.rotation.setFromQuaternion(some_quaternion, "XYZ", true);*/
                             // I think I need to search about this quaternion
-                            if (count == 60) {
+                            if (count == fps) {
                                 cubeElement.stored = false;
                                 cubeElement.cube.position.x = Math.round(cubeElement.cube.position.x);
                                 cubeElement.cube.position.y = Math.round(cubeElement.cube.position.y);
@@ -254,8 +255,11 @@ export const RotateAxis = (axisName, clockwise, value) => {
 let pivot = new THREE.Object3D(); //Create Ancestor Object3D
 pivot.rotation.set(0, 0, 0);
 
-export const RotateAll = (axisName, clockwise) => { //Rotate the hole cube
+export const RotateAll = (axisName, clockwise, fps) => { //Rotate the hole cube
     count++;
+    // if(fps == 0 || fps == null) fps = 60;
+    // console.log('fps: ' + fps);
+    const dtheta = clockwise * Math.PI / (2 * 60);
     cubeGroup.forEach((cubeinPlane) => {
         cubeinPlane.forEach((cubeinLine) => {
             cubeinLine.forEach((cubeElement) => {
@@ -268,14 +272,14 @@ export const RotateAll = (axisName, clockwise) => { //Rotate the hole cube
                             cubeElement.stored = true;
 
                         }
-                        cubeElement.angle.x += clockwise * Math.PI / 120; //Store angle of each cube element's rotation
+                        cubeElement.angle.x += dtheta; //Store angle of each cube element's rotation
                         cubeElement.cube.position.z = Math.cos(cubeElement.angle.x) * cubeElement.storePosition.z - Math.sin(cubeElement.angle.x) * cubeElement.storePosition.y;
                         cubeElement.cube.position.y = Math.sin(cubeElement.angle.x) * cubeElement.storePosition.z + Math.cos(clockwise * cubeElement.angle.x) * cubeElement.storePosition.y;
                         //By this you can get better accurracy than---> 
                         //--->cubeElement.cube.position.z = Math.cos(cubeElement.angle.x) * cubeElement.cube.position.z - Math.sin(cubeElement.angle.x) * cubeElement.cube.position.y;
 
                         pivot.attach(cubeElement.cube); //If we just use cube.rotation.x if takes us to Euler's gimbal lock problem(has too use matrix **Line  41) 
-                        pivot.rotation.x -= clockwise * Math.PI / 120; //To avoid that we make each cube element to descendant of new Object3D and rotate Object3D(Which is pivot here)
+                        pivot.rotation.x -= dtheta; //To avoid that we make each cube element to descendant of new Object3D and rotate Object3D(Which is pivot here)
                         pivot.updateMatrixWorld(); //Update Object3D
                         scene.attach(cubeElement.cube); //Assential to display in screen
 
@@ -311,12 +315,12 @@ export const RotateAll = (axisName, clockwise) => { //Rotate the hole cube
 
                         }
 
-                        cubeElement.angle.y += clockwise * Math.PI / 120;
+                        cubeElement.angle.y += dtheta;
                         cubeElement.cube.position.x = Math.cos(cubeElement.angle.y) * cubeElement.storePosition.x - Math.sin(cubeElement.angle.y) * cubeElement.storePosition.z;
                         cubeElement.cube.position.z = Math.sin(cubeElement.angle.y) * cubeElement.storePosition.x + Math.cos(cubeElement.angle.y) * cubeElement.storePosition.z;
 
                         pivot.attach(cubeElement.cube);
-                        pivot.rotation.y -= clockwise * Math.PI / 120;
+                        pivot.rotation.y -= dtheta;
                         pivot.updateMatrixWorld();
                         scene.attach(cubeElement.cube);
 
@@ -351,12 +355,12 @@ export const RotateAll = (axisName, clockwise) => { //Rotate the hole cube
                             cubeElement.stored = true;
 
                         }
-                        cubeElement.angle.z += clockwise * Math.PI / 120;
+                        cubeElement.angle.z += dtheta;
                         cubeElement.cube.position.y = Math.cos(cubeElement.angle.z) * cubeElement.storePosition.y - Math.sin(cubeElement.angle.z) * cubeElement.storePosition.x;
                         cubeElement.cube.position.x = Math.sin(cubeElement.angle.z) * cubeElement.storePosition.y + Math.cos(cubeElement.angle.z) * cubeElement.storePosition.x;
 
                         pivot.attach(cubeElement.cube);
-                        pivot.rotation.z -= clockwise * Math.PI / 120;
+                        pivot.rotation.z -= dtheta;
                         pivot.updateMatrixWorld();
                         scene.attach(cubeElement.cube);
 

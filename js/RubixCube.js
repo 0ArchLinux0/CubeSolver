@@ -109,7 +109,6 @@ function setMaterialColors(x, y, z) {
             colorMaterials.push(
                 new THREE.MeshStandardMaterial({ color: "#000" })
             );
-            // console.log("set "+colorMaterials.length);
         }
 
         x == 1 &&
@@ -250,7 +249,7 @@ function resetCam() {
     camera.position.z = 4;
     requestRender();
     setTimeout(() => {
-        buttonDown = false;
+        if(!isSolving) buttonDown = false;
     }, 5);
 }
 
@@ -321,7 +320,7 @@ function requestRender() {
 }
 
 let isRunning = false;
-let ran_num = parseInt(Math.random() * 3 - 0.1);
+let ran_diff = parseInt(Math.random() * 3 - 0.1);
 
 function requestRenderShuffle() {
     buttonDown = true;
@@ -333,11 +332,11 @@ function requestRenderShuffle() {
 }
 
 let i = 0;
-let arg1 = String.fromCharCode(88 + ran_num); //88 is 'X'
-let arg2 = (parseInt(Math.random() * 100) % 3) - 1;
+let arg1 = String.fromCharCode(88 + ran_diff); //88 is 'X'
+let arg2 = (parseInt(Math.random() * 16) % 3) - 1;
 let clickCount = 0;
 
-function animate(time) {
+function animate() {
     // console.log('animate');
     if (controls.autoRotate) {
         controls.autoRotate = false;
@@ -345,19 +344,20 @@ function animate(time) {
         return;
     }
     isRunning = true; //Prevent malfunctioning when click multiple times in a row,'isRunning=undefiend' in line 159 causes  when button clicked
-    if (i++ == 30) {
+    const fps = 30;
+
+    if (i++ == fps) {
         //R.RotateAxis rotates PI/120 so we need 60times of execution to rotate PI/2 radians.
         i = 0; //Reset i
-        ran_num = parseInt(Math.random() * 3);
+        ran_diff = (ran_diff + 1 + parseInt(Math.random() * 2)) % 3;
         isRunning = undefined; //When rotating PI/2 is done,notify it is not runnig anymore
-        arg1 = String.fromCharCode(88 + ran_num); //Random char among X,Y,Z
-        arg2 = (parseInt(Math.random() * 100) % 3) - 1; //Random int from -1 to 1
+        arg1 = String.fromCharCode(88 + ran_diff); //Random char among X,Y,Z
+        arg2 = (parseInt(Math.random() * 16) % 3) - 1; //Random int from -1 to 1
         clickCount++;
         return;
     }
     //console.log("called animate");
-    R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2); //Rotate in Axis arg1, at row index arg2
-    R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2);
+    R.RotateAxis(arg1, 2 * (ran_diff % 2) - 1, arg2, fps); //Rotate in Axis arg1, at row index arg2
    
     if (
         (!isMobile && prevWidth !== canvas.width) ||
@@ -408,18 +408,19 @@ export const solveCubeEndNotify = () => {
 
 let exeCount = 0;
 
-function animate_shuffle(time) {
+function animate_shuffle() {
     //To shuffle the Rubix Cube, we need to execute animate() for certain SHUFFLE_TIME.
     if (controls.autoRotate) controls.autoRotate = false;
     isRunning = true;
-    if (i++ == 30) {
+    buttonDown = true;
+    const fps = 30;
+    if (i++ == fps) {
         //Reset when rotates PI/2
         i = 1; //To match execute time to 60
-        ran_num = parseInt(Math.random() * 3 - 0.1);
-
+        ran_diff = (ran_diff + 1 + parseInt(Math.random() * 2)) % 3;
         exeCount++; //Increase execution time to compare with SHUFFLE_TIME
-        arg1 = String.fromCharCode(88 + ran_num);
-        arg2 = (parseInt(Math.random() * 100) % 3) - 1;
+        arg1 = String.fromCharCode(88 + ran_diff);
+        arg2 = (parseInt(Math.random() * 16) % 3) - 1;
     }
     if (exeCount == SHUFFLE_TIME) {
         //When matches to SHUFFLE_TIME reset exeCount and i to intial vaule.
@@ -429,9 +430,9 @@ function animate_shuffle(time) {
         isRunning = undefined;
         return;
     }
-    buttonDown = true;
-    R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2); //Rotate
-    R.RotateAxis(arg1, 2 * (ran_num % 2) - 1, arg2);
+
+    R.RotateAxis(arg1, 2 * (ran_diff % 2) - 1, arg2, fps); //Rotate
+
     if (
         (!isMobile && prevWidth !== canvas.width) ||
         prevHeight !== canvas.heigth
