@@ -3337,7 +3337,7 @@ function step5_CompleteFace_3() { //Set edges of yellow face in right position
 
 function step6_LeftTop_To_RightBottom_just() { //Set edges of yellow face in right position
     console.log('final step!!!!!');
-    step6_RightBottom_To_LeftTop(true);
+    step6_again();
 }
 
 function step6_LeftTop_To_RightBottom() { //Set edges of yellow face in right position
@@ -3398,6 +3398,60 @@ function step6_LeftTop_To_RightBottom() { //Set edges of yellow face in right po
     controls.update(); //Update
     renderer.render(scene, camera); //render to display on screen
     requestAnimationFrame(step6_LeftTop_To_RightBottom);
+}
+
+function step6_again() {
+    if (i++ == 60) {
+        i = 1;
+        step2_1_count++;
+    }
+    if (step2_1_count == 12) {
+        i = 0;
+        step2_1_count = 0;
+        step6();
+        return;
+    }
+        switch (step2_1_count) {
+        case 0:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 1:
+            R.RotateAxis("Z", 1, 1);
+            break;
+        case 2:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 3:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 4:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 5:
+            R.RotateAxis("X", 1, 1);
+            break;
+        case 6:
+            R.RotateAxis("Z", -1, 1);
+            break;
+        case 7:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 8:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 9:
+            R.RotateAxis("Z", 1, -1);
+            break;
+        case 10:
+            R.RotateAxis("X", -1, 1);
+            break;
+        case 11:
+            R.RotateAxis("X", -1, 1);
+            break;
+    }
+    controls.update(); //Update
+    renderer.render(scene, camera); //render to display on screen
+    requestAnimationFrame(step6_again);
 }
 
 function step6_RightBottom_To_LeftTop(again) { //Set edges of yellow face in right position
