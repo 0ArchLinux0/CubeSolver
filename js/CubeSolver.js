@@ -1,5 +1,4 @@
 import * as Control from './CameraControl.js'
-import { controls, camera, scene, renderer, cubeGroup, cubeRotateState, solveCubeEndNotify } from './RubixCube.js';
 import * as R from './Rotation.js';
 
 
@@ -495,7 +494,7 @@ const step6 = () => { //Count the number of cube which is placed in it's init po
         step6_helper();
         return;
     } else if (count == 4) {
-        solveCubeEndNotify();
+        step7();
         return;
     }
 }
@@ -525,11 +524,11 @@ const step6_helper = () => { //Makes all the edges be in the right place.
     ]);
     const initPosition = [matrix_0, matrix_1, matrix_2, matrix_3];
 
-    const rotYmatrix = math.matrix([
-        [0, 0, 1],
-        [0, 1, 0],
-        [-1, 0, 0]
-    ]);
+    // const rotYmatrix = math.matrix([
+    //     [0, 0, 1],
+    //     [0, 1, 0],
+    //     [-1, 0, 0]
+    // ]);
 
   
     if (storeRightCube.cube.position.x == -1 && storeRightCube.cube.position.z == 1) {
@@ -539,12 +538,10 @@ const step6_helper = () => { //Makes all the edges be in the right place.
             const supposedZ = supposedPosition.subset(math.index(1, 2));
             if (supposedX== 1 && supposedZ== -1  ) {
                 if (cube[j].cube.position.x == 1){
-                    solveCubeEndNotify(); 
                     step6_LeftTop_To_RightBottom();
                     return;
                 }
                 else{
-                    solveCubeEndNotify(); 
                     step6_RightBottom_To_LeftTop();
                     return;
                 }
@@ -561,7 +558,6 @@ const step6_helper = () => { //Makes all the edges be in the right place.
 const step7=()=>{
 
     if (cubeGroup[1][1][2].cube.position.x == 0 && cubeGroup[1][1][2].cube.position.z == 1){
-        solveCubeEndNotify();
         return;
     }
     R.RotateAll("Y", 1, 1);
