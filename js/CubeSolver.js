@@ -559,6 +559,7 @@ const step6_helper = () => { //Makes all the edges be in the right place.
 const step7=()=>{
 
     if (cubeGroup[1][1][2].cube.position.x == 0 && cubeGroup[1][1][2].cube.position.z == 1){
+        solveCubeEndNotify();
         return;
     }
     R.RotateAll("Y", 1, 1);
