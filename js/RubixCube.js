@@ -344,7 +344,7 @@ function animate() {
         return;
     }
     isRunning = true; //Prevent malfunctioning when click multiple times in a row,'isRunning=undefiend' in line 159 causes  when button clicked
-    const fps = 30;
+    const fps = 60;
 
     if (i++ == fps) {
         //R.RotateAxis rotates PI/120 so we need 60times of execution to rotate PI/2 radians.
