@@ -19,24 +19,25 @@ canvas {
     overflow: hidden;
 }
 
-#changePerformanceButton {
+.changeButton {
     margin: 0px 10px;
     font-size: 1rem;
     color: #ffff00;
 }
 
-#changePerformanceButton:hover {
+.changeColorButton:hover {
     color: #FFA500;
     cursor: pointer;
 }
 
-#currentPerformance {
-    color: #FF0000;
+.changeModeButton:hover {
+    color: #FFA500;
+    cursor: pointer;
 }
 
-#description {
+.description {
     margin-left: 10px;
-    color: #006400;
+    color: #067c19;
     font-size: 0.75rem;
 }
 
@@ -55,6 +56,16 @@ canvas {
 
 div .row {
     justify-content: space-around;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 .row {
@@ -102,7 +113,7 @@ div .row {
     background-color: #dbe4ff;
 }
 
-@media only screen and (max-width: 772 px) {
+@media only screen and (max-width: 772px) {
     #shuffle-and-solve {
         height: 100px;
         bottom: 4%;

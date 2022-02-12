@@ -34,20 +34,19 @@ controls.enablePan = false;
 */
 
 const SHUFFLE_TIME = 6;
-const CLOCKWISE = 1;
-const ANTICLOCKWISE = -1;
-
 const pixelRatio = window.devicePixelRatio;
 canvas.width = window.innerWidth * pixelRatio;
 canvas.height = window.innerHeight * pixelRatio;
+const cubeColorArr = ["#000", "#fff"];
+
 let prevWidth = canvas.width;
 let prevHeight = canvas.height;
-
+let isDown = false;
+let lowQualityMode = false;
+let cubeColorIdx = 1; // 0 for black, 1 for white
 /*{antialias: true}*/
 // let isTouchMove = false;
 // let isDrag = false;
-let isDown = false;
-let lowQualityMode = isMobile;
 
 export const renderer = new THREE.WebGLRenderer({
   antialias: true,
@@ -69,7 +68,7 @@ const COLOR_DIRECTIONS = {
 
 // const geometry = new THREE.Geometry();
 
-var loader = new THREE.TextureLoader();
+let loader = new THREE.TextureLoader();
 
 const logoCubeTexture = loader.load("./image/MinJun.png");
 const whiteCubeTexture = loader.load("./image/CopyrightTop.png");
@@ -77,11 +76,80 @@ const poweredTexture = loader.load("./image/PoweredBy.png");
 
 const fps = 60;
 
-const displayMode = document.getElementById("currentPerformance");
-const modeTextArr = ["Low", "High"];
-const setModeText = () =>
-  (displayMode.innerHTML = modeTextArr[lowQualityMode ? 0 : 1]);
-// setModeText();
+const highQualityDomEle = document.getElementById("highQuality");
+const lowQualityDomEle = document.getElementById("lowQuality");
+const blackCubeDomEle = document.getElementById("blackCube");
+const whiteCubeDomEle = document.getElementById("whiteCube");
+const setModeText = () => { 
+	if(lowQualityMode) {
+		highQualityDomEle.style.color = "#ffff00";
+		highQualityDomEle.onmouseover = function() {
+			this.style.color = "#ffffff";
+
+		}
+		highQualityDomEle.onmouseout = function() {
+			this.style.color = "#ffff00"
+		};
+		lowQualityDomEle.style.color = "#FF4433";
+		lowQualityDomEle.onmouseover = function () {
+      this.style.color = "#A52A2A";
+    };
+    lowQualityDomEle.onmouseout = function () {
+      this.style.color = "#FF4433";
+    };
+	} else {
+      highQualityDomEle.style.color = "#FF4433";
+			highQualityDomEle.onmouseover = function () {
+        this.style.color = "#A52A2A";
+      };
+      highQualityDomEle.onmouseout = function () {
+        this.style.color = "#FF4433";
+      };
+      lowQualityDomEle.style.color = "#ffff00";
+			lowQualityDomEle.onmouseover = function () {
+        this.style.color = "#FFA500";
+      };
+      lowQualityDomEle.onmouseout = function () {
+        this.style.color = "#ffff00";
+      };
+	}
+};
+setModeText();
+
+const setColorText = () => {
+  if (cubeColorIdx) {
+    blackCubeDomEle.style.color = "#ffff00";
+    blackCubeDomEle.onmouseover = function () {
+      this.style.color = "#ffffff";
+    };
+    blackCubeDomEle.onmouseout = function () {
+      this.style.color = "#ffff00";
+    };
+    whiteCubeDomEle.style.color = "#FF4433";
+    whiteCubeDomEle.onmouseover = function () {
+      this.style.color = "#A52A2A";
+    };
+    whiteCubeDomEle.onmouseout = function () {
+      this.style.color = "#FF4433";
+    };
+  } else {
+    blackCubeDomEle.style.color = "#FF4433";
+    blackCubeDomEle.onmouseover = function () {
+      this.style.color = "#A52A2A";
+    };
+    blackCubeDomEle.onmouseout = function () {
+      this.style.color = "#FF4433";
+    };
+    whiteCubeDomEle.style.color = "#ffff00";
+    whiteCubeDomEle.onmouseover = function () {
+      this.style.color = "#FFA500";
+    };
+    whiteCubeDomEle.onmouseout = function () {
+      this.style.color = "#ffff00";
+    };
+  }
+};
+setColorText();
 
 //scene.background = groundTexture;
 /*groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
@@ -104,7 +172,7 @@ function setMaterialColors(x, y, z) {
     const colorMaterials = [];
 
     for (let i = 0; i < 6; i++) {
-      colorMaterials.push(new THREE.MeshStandardMaterial({ color: "#000" }));
+      colorMaterials.push(new THREE.MeshStandardMaterial({ color: cubeColorArr[cubeColorIdx] }));
     }
 
     x == 1 &&
@@ -193,7 +261,7 @@ const settings = {
 /*loader.setCrossOrigin( "" );
 loader.setPath( 'https://threejs.org/examples/textures/cube/pisa/' );*/
 
-/*var cubeTexture = loader.load( [
+/*let cubeTexture = loader.load( [
   'px.png', 'nx.png',
   'py.png', 'ny.png',
   'pz.png', 'nz.png'
@@ -225,11 +293,11 @@ const setBacklight = () => {
 
 setBacklight();
 
-//var loader = new THREE.CubeTextureLoader();
+//let loader = new THREE.CubeTextureLoader();
 /*loader.setCrossOrigin( "" );
 loader.setPath( 'https://threejs.org/examples/textures/cube/pisa/' );
 
-var cubeTexture = loader.load( [
+let cubeTexture = loader.load( [
   'px.png', 'nx.png',
   'py.png', 'ny.png',
   'pz.png', 'nz.png'
@@ -245,7 +313,7 @@ function resetCam() {
   setTimeout(() => {}, 5);
 }
 
-function removeCubeFromScene() {
+function reCreateCubeFromScene() {
   function removeCube() {
     return new Promise((resolve, reject) => {
       while (scene.children.length > 0) {
@@ -265,8 +333,15 @@ function removeCubeFromScene() {
 const changeMode = (e) => {
   if (shuffleRunning || animateRunning || isSolving) return;
   lowQualityMode = !lowQualityMode;
-  removeCubeFromScene();
+  reCreateCubeFromScene();
   setModeText();
+};
+
+const changeCubeColor = (e) => {
+  if (shuffleRunning || animateRunning || isSolving) return;
+  cubeColorIdx = 1 ^ cubeColorIdx;
+  reCreateCubeFromScene();
+  setColorText();
 };
 
 let renderRequested = false;
@@ -290,7 +365,7 @@ function render(time) {
   }
 
   camera.updateMatrixWorld(); //Update the camera location
-  const vector = camera.position.clone(); //Get camera position and put into variable
+  const vector = camera.position.clone(); //Get camera position and put into letiable
   vector.applyMatrix4(camera.matrixWorld); //Hold the camera location in matrix world
   light.position.set(vector.x, vector.y, vector.z);
   light.updateMatrixWorld();
@@ -487,13 +562,20 @@ const onUp = (e) => {
 const btn_solve = document.getElementById("solve");
 const btn_shuffle = document.getElementById("shuffle");
 const btn_resetCam = document.getElementById("resetCam");
-const btn_changeMode = document.getElementById("changePerformanceButton");
+const btn_changeMode = document.getElementsByClassName("changeModeButton");
+const btn_changeColor = document.getElementsByClassName("changeColorButton");
 
 controls.addEventListener("change", requestRender, false); //called first at initializing
 btn_shuffle.addEventListener("pointerup", requestRenderShuffle, false);
 btn_solve.addEventListener("pointerup", solveCubeButtonListener, false);
 btn_resetCam.addEventListener("pointerup", resetCam, false);
-btn_changeMode.addEventListener("pointerup", changeMode, false);
+
+for(let ele of btn_changeMode) {
+	ele.addEventListener("pointerup", changeMode, false);
+}
+for (let ele of btn_changeColor) {
+  ele.addEventListener("pointerup", changeCubeColor, false);
+}
 
 document
   .getElementsByTagName("canvas")[0]
