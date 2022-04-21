@@ -1,9 +1,7 @@
 # CubeSolver(incomplete) (2020.11~2020.12)
-### The purpose was to 'Help you to Learn to solve Rubix Cube easily'  
-### So I composed algorithm with easiest way of solving rubix cube  
+### learn rubix cube  
 ##### Successfully implemented 3x3x3 rubix cube 3d model on the web and animated the solution process.  
-##### Then I tried to provide a solution for user's case by analyzing the cube's status with a camera using OpenCV,  
-##### *__but__* it hasn't been long since I started studying programming, so I put it off to do it later.  
+##### Planning to provide a solution for user's specific state of rubix cube with a camera using OpenCV. 
   
 ## 2021.10.6 Updated Interface and slightly clean up the code
 ## 2022.02.12 Clean up the code with formatter & little optimization  
